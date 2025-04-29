@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center items-center min-h-[calc(100vh-80px)]">
-        <div class="bg-gray-900 bg-opacity-50 w-[80%] rounded-xl px-4 py-6 text-white  shadow-xl backdrop-blur space-y-4">
+    <div class="flex justify-center items-center min-h-[calc(100vh-80px)]  mt-5">
+        <div class="bg-gray-900 bg-opacity-50 w-[80%] rounded-3xl px-4 py-6 text-white  shadow-xl backdrop-blur space-y-4 animate-zoom-in">
             
                 <h2 class="text-blue-400 font-bold text-center text-3xl">My journey</h2>
             

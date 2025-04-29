@@ -1,22 +1,22 @@
 <template>
-    <div class="projects-container">
-      <div class="projects-grid">
-        <div v-for="project in projects" :key="project.id" class="project-card">
-          <img :src="project.image" :alt="project.title">
-          <div class="project-content">
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description }}</p>
-            <div class="project-tech">
-              <span v-for="tech in project.technologies" :key="tech" class="tech-tag">
-                {{ tech }}
-              </span>
-            </div>
-            <div class="project-links">
-              <a :href="project.github" target="_blank">GitHub</a>
-              <a :href="project.demo" target="_blank">Live Demo</a>
-            </div>
-          </div>
-        </div>
+    <div class="projects-container animate-fa">
+      <div class="iframe-wrapper">
+        <iframe 
+          :src="currentWebsite"
+          :title="currentTitle"
+          class="website-frame"
+          ref="frame"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="website-controls">
+        <button 
+          v-for="site in websites" 
+          :key="site.url"
+          @click="loadWebsite(site)"
+          :class="{ active: currentWebsite === site.url }">
+          {{ site.title }}
+        </button>
       </div>
     </div>
   </template>
@@ -25,18 +25,30 @@
   export default {
     data() {
       return {
-        projects: [
+        currentWebsite: '',
+        currentTitle: '',
+        websites: [
           {
-            id: 1,
-            title: 'Project Name',
-            description: 'Brief description of the project',
-            image: '/path/to/image.jpg',
-            technologies: ['Vue.js', 'Node.js', 'MongoDB'],
-            github: 'https://github.com/username/project',
-            demo: 'https://demo-link.com'
+            title: 'Barbers Unity',
+            url: 'https://barbersunity.com/'
           },
-          // Add more projects here
+        //   {
+        //     title: 'My Blog',
+        //     url: 'https://yourblog.com'
+        //   },
+          // Add more websites as needed
         ]
+      }
+    },
+    methods: {
+      loadWebsite(site) {
+        this.currentWebsite = site.url
+        this.currentTitle = site.title
+      }
+    },
+    mounted() {
+      if (this.websites.length > 0) {
+        this.loadWebsite(this.websites[0])
       }
     }
   }
@@ -44,52 +56,50 @@
   
   <style scoped>
   .projects-container {
-    padding: 2rem;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
   }
   
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  
-  .project-card {
+  .iframe-wrapper {
+    flex: 1;
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
   }
   
-  .project-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .project-card img {
+  .website-frame {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 100%;
+    border: none;
   }
   
-  .project-content {
-    padding: 1.5rem;
+  .website-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
   }
   
-  .tech-tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    margin: 0.25rem;
-    background-color: #e9ecef;
-    border-radius: 15px;
-    font-size: 0.875rem;
+  .website-controls button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
   
-  .project-links {
-    margin-top: 1rem;
+  .website-controls button.active {
+    background: #007bff;
+    color: white;
   }
   
-  .project-links a {
-    margin-right: 1rem;
-    text-decoration: none;
-    color: #007bff;
+  .website-controls button:hover {
+    transform: translateY(-2px);
   }
   </style>
